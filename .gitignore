@@ -1,0 +1,24 @@
+# Raw Ofcom source data — too large for GitHub (1.9GB, individual files up to 601MB).
+# Download from Ofcom's Online Experiences Tracker publications page and place in raw/.
+raw/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Temp
+*.tmp
+*.log
+~$*

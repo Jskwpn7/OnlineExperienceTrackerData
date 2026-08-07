@@ -1,0 +1,12 @@
+topic,questionnaire_item_w9,wave2_variable_example,question,description,boundary
+Scams/fraud/phishing,Q7 item 26,q07_*,Q7 Concern,How concerned about "Scams, fraud, or phishing" existing online (scale 1-5),core
+Scams/fraud/phishing,Q8 item 26,q08_22,Q8 Experienced,Seen/experienced "Scams, fraud, or phishing" online in last 4 weeks,core
+Scams/fraud/phishing,Q32b,n/a,Scams impact,"What happened as a result of scams/fraud/phishing (incl. lost money/assets)",core
+Scams/fraud/phishing,Q32b2,n/a,Fraud type,Which of 12 online fraud/scam types money/assets were lost to,core
+Deepfakes,Q7 item 24,q07_*,Q7 Concern,"Concern about ""Fake or deceptive images/videos, e.g. deep fakes""",core
+Deepfakes,Q8 item 24,q08_20,Q8 Experienced,"Experienced ""Fake or deceptive images/videos, e.g. deep fakes"" in last 4 weeks",core
+Impersonation/catfishing,Q7 item 19,q07_*,Q7 Concern,"Concern about ""People pretending to be another person, e.g. catfishing""",related
+Impersonation/catfishing,Q8 item 19,q08_15,Q8 Experienced,"Experienced ""People pretending to be another person, e.g. catfishing""",related
+Misinformation/fake news,Q7 item 11,q07_*,Q7 Concern,"Concern about ""Misinformation / false or misleading stories e.g. fake news""",related (confirmed in scope)
+Misinformation/fake news,Q8 item 11,q08_09,Q8 Experienced,"Experienced ""Misinformation / false or misleading stories e.g. fake news""",related (confirmed in scope)
+VPN reason: fraud,D14b code 3,n/a,VPN usage,Uses VPN "to protect myself from fraudulent activities",likely-exclude

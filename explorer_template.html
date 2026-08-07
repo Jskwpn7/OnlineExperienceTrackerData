@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OET Scams & Online-Harms Explorer</title>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--head:#10243e;--accent:#2a6df4;--text:#1c2533;--muted:#697586;--warn:#b54708;--radius:10px;--gap:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.wrap{max-width:1320px;margin:0 auto;padding:var(--gap)}
+header.top{background:var(--head);color:#fff;padding:16px 22px;border-radius:var(--radius);margin-bottom:12px}
+header.top h1{font-size:19px;font-weight:650}header.top p{font-size:12.5px;color:#9fb3c8;margin-top:3px}
+.aboutbtn{margin-top:9px;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tab{font-size:13px;padding:8px 13px;border-radius:8px;border:0.5px solid #d4dae3;background:#fff;color:var(--muted);cursor:pointer;font-weight:500}
+.tab.on{border:2px solid var(--accent);color:var(--accent);background:#fff}
+.tab.ov{background:#eef2f7}
+.layout{display:grid;grid-template-columns:218px 1fr;gap:var(--gap)}
+.nav{background:var(--card);border:0.5px solid #e3e8ef;border-radius:var(--radius);padding:10px;height:max-content}
+.navgrp{font-size:10.5px;color:#94a0ad;text-transform:uppercase;letter-spacing:.5px;margin:10px 0 3px;padding:0 4px}
+.navgrp:first-child{margin-top:2px}
+.navitem{font-size:12.7px;padding:6px 9px;border-radius:6px;color:var(--muted);cursor:pointer}
+.navitem:hover{background:#f1f5fa}
+.navitem.on{background:#e7f0ff;color:var(--accent);font-weight:600}
+.main{min-width:0}
+.crumb{background:var(--card);border:0.5px solid #e3e8ef;border-radius:var(--radius);padding:9px 13px;font-size:12px;color:var(--text);margin-bottom:12px}
+.crumb b{font-weight:650}.crumb i{font-style:normal;color:#aab4c0;margin:0 5px}.crumb .warn{color:var(--warn)}
+.ctrls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.ctrls label{font-size:11px;color:var(--muted);margin-right:5px}
+.ctrls select{padding:7px 9px;border:1px solid #d4dae3;border-radius:6px;font-size:12.5px;background:#fff}
+.toggle{display:inline-flex;border:1px solid #d4dae3;border-radius:6px;overflow:hidden}
+.toggle button{border:0;background:#fff;padding:7px 11px;font-size:11.5px;cursor:pointer;color:var(--muted)}
+.toggle button.on{background:var(--accent);color:#fff;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px}
+.kpi{background:var(--card);border:0.5px solid #e3e8ef;border-radius:var(--radius);padding:13px 16px}
+.kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.kpi .v{font-size:24px;font-weight:750;margin-top:2px}.kpi .s{font-size:12px;color:var(--muted)}
+.pos{color:#0f7b3f}.neg{color:#c4321a}.flagtxt{color:var(--warn);font-weight:600}.muted{color:var(--muted)}
+.cards2{display:grid;grid-template-columns:1fr;gap:var(--gap);margin-bottom:12px}
+.panel{background:var(--card);border:0.5px solid #e3e8ef;border-radius:var(--radius);padding:16px 18px;min-width:0}
+.panel h3{font-size:13px;font-weight:650;margin-bottom:4px}
+.panel .note{font-size:11px;color:var(--muted);margin-bottom:8px}
+.panel svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:9px;margin-top:7px;font-size:11px;color:var(--muted)}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:4px;vertical-align:-1px}
+.tablewrap{background:var(--card);border:0.5px solid #e3e8ef;border-radius:var(--radius);padding:14px 18px;overflow-x:auto}
+.tablewrap .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.btn{background:var(--accent);color:#fff;border:0;padding:7px 13px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:12.3px}
+th{text-align:left;padding:8px 10px;border-bottom:2px solid #e3e8ef;color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.4px}
+td{padding:8px 10px;border-bottom:1px solid #f0f2f5}
+.ovgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--gap)}
+.ovcard{background:var(--card);border:0.5px solid #e3e8ef;border-radius:var(--radius);padding:16px 18px;cursor:pointer}
+.ovcard:hover{border-color:var(--accent)}
+.hl{font-size:12.5px;padding:7px 9px;border-radius:6px;cursor:pointer;border-bottom:0.5px solid #f0f2f5}.hl:hover{background:#f1f5fa}
+.ovcard h3{font-size:15px;font-weight:650;margin-bottom:10px}
+.ovrow{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px}
+.ovrow b{font-size:16px}
+.about{display:none;background:var(--card);border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,.08);padding:20px 24px;margin-bottom:12px;max-height:70vh;overflow:auto}
+.about.show{display:block}.about h2{font-size:16px;margin-bottom:6px}.about h4{font-size:12.5px;margin:12px 0 3px;color:var(--head)}
+.about p,.about li{font-size:12.5px;color:#33414f;margin-bottom:5px}.about ul{margin:0 0 5px 18px}
+.about .warnrow{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 12px;color:#7c2d12;margin:8px 0}
+.about .close{float:right;background:#eef2f7;border:0;border-radius:6px;padding:6px 12px;cursor:pointer;font-weight:600}
+@media(max-width:880px){.layout{grid-template-columns:1fr}.cards2{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header class="top"><h1>OET Scams &amp; Online-Harms Explorer</h1>
+<p>Ofcom Online Experiences Tracker, waves 1&ndash;9 (2021&ndash;2026) &middot; weighted estimates &middot; pick a topic, then a measure</p>
+<button class="aboutbtn" id="aboutBtn">&#9432; About &amp; how to read</button> <button class="aboutbtn" id="linkBtn">&#128279; Copy link</button></header>
+<div class="about" id="about"><button class="close" id="aboutClose">Close</button>
+<h2>How to read this tool &mdash; and its caveats</h2>
+<p>Independent analysis of Ofcom&rsquo;s Online Experiences Tracker open data &mdash; <b>not an official Ofcom output</b>. It reproduces Ofcom&rsquo;s published Wave&nbsp;9 figures.</p>
+<h4>What the data is</h4><ul>
+<li>YouGov online survey for Ofcom, twice a year, ~7,000+ people per wave.</li>
+<li>Represents <b>UK internet users</b> (weighted) &mdash; not the whole population. Everything is <b>self-reported</b>.</li>
+<li>Scope: scams/fraud, deepfakes, impersonation, misinformation only.</li></ul>
+<h4>Reading the numbers</h4><ul>
+<li>Percentages are <b>weighted</b>; bases shown are <b>unweighted</b> (people asked).</li>
+<li>Each % is a share of <b>that view&rsquo;s base</b> &mdash; watch the base breadcrumb.</li>
+<li>Concern (attitude) and Experienced (encounter) are different things.</li><li>The trend shows a 95% confidence band, and each latest wave-on-wave change is flagged <b>sig.</b> or <b>n.s.</b> CIs use the <b>Kish effective base</b> (accounts for the weighting design effect); they don&rsquo;t add clustering/finite-population corrections, so treat them as close but not exact.</li><li><b>Copy link</b> (top right) copies a link to the exact view you&rsquo;re on.</li></ul>
+<h4>Waves &amp; comparability</h4><ul>
+<li>No Wave 3 (Ofcom withdrew it). 13+ (W1&ndash;7) vs 18+ (W8&ndash;9) &mdash; use the Basis toggle (&ldquo;18+ comparable&rdquo; is our recompute).</li></ul>
+<div class="warnrow"><b>Discontinuity:</b> waves 1&ndash;2 (2021&ndash;22) used an earlier format and sit far below waves 4+. Treat the 2&rarr;4 step as a method change, not a trend.</div>
+<h4>Base sizes</h4><ul>
+<li>Bases &lt;50 flagged <span style="color:#b54708">&#9888;</span>. Most follow-ups are asked about one sampled harm per person &mdash; Total-level only, smaller than headline numbers. Platform-specific (Q22&ndash;29) and genAI views are very thin, kept to track over time. Full detail in README.md.</li></ul></div>
+<div class="tabs" id="tabs"></div>
+<div id="view"></div>
+<footer style="font-size:11px;color:var(--muted);text-align:center;padding:14px">Source: Ofcom Online Experiences Tracker (independent analysis, not endorsed by Ofcom). Built __DATE__.</footer>
+</div>
+<script>
+const P=/*__DATA__*/0;
+const {T,M,R,G,V,B,STAGE,rows}=P;
+const cW=0,cB=1,cT=2,cM=3,cR=4,cG=5,cV=6,cP=7,cBASE=8,cS=9,cEFF=10;
+const HARMS=['Scams & fraud','Deepfakes','Misinformation','Impersonation'];
+const COLORS=['#2a6df4','#dd8452','#55a868','#c44e52','#8172b3','#937860','#11998e','#e8a838','#6b7280','#d6457d','#3b8c6e','#9a6fb0'];
+const HARM_COLOR={'Scams & fraud':'#2a6df4','Deepfakes':'#dd8452','Misinformation':'#55a868','Impersonation':'#c44e52'};
+const PLATPREFIX='Specific platform: ';const isPlatform=n=>n.startsWith(PLATPREFIX);
+const platformMeasures=topic=>measuresFor(topic).filter(m=>isPlatform(m.n));
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const TI={};T.forEach((t,i)=>TI[t]=i);const RI={};R.forEach((r,i)=>RI[r]=i);
+const GI={};G.forEach((g,i)=>GI[g]=i);const MI={};M.forEach((m,i)=>MI[m.n]=i);
+const topicMeasures={},tmResp={},tmSub={};
+for(const x of rows){const t=x[cT],m=x[cM];(topicMeasures[t]=topicMeasures[t]||new Set()).add(m);
+ const k=t+'|'+m;(tmResp[k]=tmResp[k]||new Set()).add(x[cR]);(tmSub[k]=tmSub[k]||new Set()).add(x[cG]);}
+const state={topic:'Overview',measure:null,response:'',subgroup:'ALL',basis:1};
+let lastHL=null;
+
+function measuresFor(topic){const t=TI[topic];return [...(topicMeasures[t]||[])].map(i=>({i,...M[i]}))
+ .sort((a,b)=>STAGE.indexOf(a.stage)-STAGE.indexOf(b.stage)||a.n.localeCompare(b.n));}
+function responsesFor(topic,mn){return [...(tmResp[TI[topic]+'|'+MI[mn]]||[])].map(i=>R[i]);}
+function subgroupsFor(topic,mn){return [...(tmSub[TI[topic]+'|'+MI[mn]]||[])].map(i=>G[i]);}
+function frows(topic,mn,resp,sub,basis){const t=TI[topic],m=MI[mn],r=RI[resp],g=GI[sub],b=basis==null?state.basis:basis;
+ return rows.filter(x=>x[cT]===t&&x[cM]===m&&x[cR]===r&&x[cG]===g&&x[cB]===b);}
+function oneRow(topic,mn,resp,sub,wave,basis){return frows(topic,mn,resp,sub,basis).find(x=>x[cW]===wave);}
+function lastRow(topic,mn,resp,sub,basis){const a=frows(topic,mn,resp,sub,basis).sort((p,q)=>p[cW]-q[cW]);return a[a.length-1];}
+
+function afterMeasure(){const m=M[MI[state.measure]];const rs=responsesFor(state.topic,state.measure).filter(r=>r!=='');
+ state.response=m.isCat?(rs[0]||''):'';const sg=subgroupsFor(state.topic,state.measure);
+ state.subgroup=sg.includes('ALL')?'ALL':sg[0];}
+function selectTopic(t){state.topic=t;if(t!=='Overview'){state.measure=measuresFor(t)[0].n;afterMeasure();}render();}
+function selectMeasure(n){state.measure=n;afterMeasure();render();}
+
+function render(){updateHash();renderTabs();const v=$('view');
+ if(state.topic==='Overview'){v.innerHTML=overviewHTML();v.querySelectorAll('.ovcard').forEach(c=>c.onclick=()=>selectTopic(c.dataset.t));v.querySelectorAll('.hl').forEach(el=>el.onclick=()=>{const id=el.dataset.i,arr=id[0]==='m'?lastHL.movers:lastHL.gaps,it=arr[+id.slice(1)];if(it)jumpTo(it.t,it.mn,it.sg);});}
+ else{v.innerHTML=topicHTML();wireTopic();}}
+function renderTabs(){let h=`<button class="tab ov ${state.topic==='Overview'?'on':''}" data-t="Overview">Overview</button>`;
+ T.forEach(t=>h+=`<button class="tab ${state.topic===t?'on':''}" data-t="${esc(t)}">${esc(t)}</button>`);
+ $('tabs').innerHTML=h;$('tabs').querySelectorAll('.tab').forEach(b=>b.onclick=()=>selectTopic(b.dataset.t));}
+
+function pts(topic,mn,resp,sub,basis){return frows(topic,mn,resp,sub,basis).map(x=>({wave:x[cW],pct:x[cP],base:x[cBASE],small:x[cS],eff:x[cEFF]})).sort((a,b)=>a.wave-b.wave);}
+function overviewHTML(){let h='<div class="ovgrid">';
+ HARMS.forEach(t=>{const exp=lastRow(t,'Experienced','','ALL',1);const con=lastRow(t,'Concern: very concerned','','ALL',1);
+  const sp=pts(t,'Experienced','','ALL',1);
+  h+=`<div class="ovcard" data-t="${esc(t)}"><h3><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${HARM_COLOR[t]};margin-right:6px;vertical-align:1px"></span>${esc(t)}</h3>
+   <div class="ovrow"><span class="muted">Very concerned</span><b>${con?con[cP]+'%':'&ndash;'}</b></div>
+   <div class="ovrow"><span class="muted">Experienced (last 4 wks)</span><b>${exp?exp[cP]+'%':'&ndash;'}</b></div>
+   <div style="margin-top:8px">${sparkSVG(sp,HARM_COLOR[t])}</div>
+   <div class="muted" style="font-size:11px;margin-top:6px">Experienced, waves ${sp.length?sp[0].wave:''}&ndash;${sp.length?sp[sp.length-1].wave:''} (18+) &middot; click to explore</div></div>`;});
+ h+='</div>';lastHL=computeHighlights();
+ const mv=lastHL.movers.length?lastHL.movers.map((m,i)=>`<div class="hl" data-i="m${i}">${m.txt}</div>`).join(''):'<p class="muted">No significant changes in the latest wave.</p>';
+ const gp=lastHL.gaps.length?lastHL.gaps.map((g,i)=>`<div class="hl" data-i="g${i}">${g.txt}</div>`).join(''):'<p class="muted">No subgroup gaps &ge;6 pts.</p>';
+ h+=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--gap);margin-top:var(--gap)"><div class="panel"><h3>What&rsquo;s moved</h3><div class="note">Biggest significant wave-on-wave changes (18+) &middot; click to open</div>${mv}</div><div class="panel"><h3>Widest subgroup gaps</h3><div class="note">Latest wave, base &ge;100 (18+) &middot; click to open</div>${gp}</div></div>`;
+ return h;}
+function computeHighlights(){const movers=[],gaps=[];const rob=['Experienced','Concern: very concerned','Most recent harm','Money lost to a scam'];
+ HARMS.forEach(t=>rob.forEach(mn=>{if(!(topicMeasures[TI[t]]||new Set()).has(MI[mn]))return;const p=pts(t,mn,'','ALL',1);if(p.length<2)return;const last=p[p.length-1],prev=p[p.length-2];const ch=+(last.pct-prev.pct).toFixed(1);
+  if(sigDiff(last.pct,last.eff,prev.pct,prev.eff)&&Math.abs(ch)>=2)movers.push({a:Math.abs(ch),t,mn,sg:'ALL',txt:`${esc(t)} &middot; ${esc(mn.replace('Concern: ','concern, ').replace('Most recent harm','most-recent share'))}: <b>${ch>0?'+':''}${ch} pts</b> (W${prev.wave}&rarr;W${last.wave})`});}));
+ HARMS.forEach(t=>['Experienced','Concern: very concerned'].forEach(mn=>{if(!(topicMeasures[TI[t]]||new Set()).has(MI[mn]))return;['Gender','Age','SEG'].forEach(sg=>{if(!subgroupsFor(t,mn).includes(sg))return;const all=frows(t,mn,'',sg,1).map(x=>x[cW]);if(!all.length)return;const latest=Math.max(...all);const rws=frows(t,mn,'',sg,1).filter(x=>x[cW]===latest&&x[cBASE]>=100);if(rws.length<2)return;const vals=rws.map(x=>({v:V[x[cV]],p:x[cP]}));const hi=vals.reduce((a,b)=>b.p>a.p?b:a),lo=vals.reduce((a,b)=>b.p<a.p?b:a);const gap=+(hi.p-lo.p).toFixed(1);
+  if(gap>=6)gaps.push({a:gap,t,mn,sg,txt:`${esc(t)} ${mn.includes('concern')?'concern':'experienced'} by ${sg}: <b>${esc(hi.v)} ${hi.p}%</b> vs <b>${esc(lo.v)} ${lo.p}%</b> (${gap} pt gap)`});});}));
+ movers.sort((a,b)=>b.a-a.a);gaps.sort((a,b)=>b.a-a.a);return {movers:movers.slice(0,6),gaps:gaps.slice(0,6)};}
+function jumpTo(t,mn,sg){state.topic=t;state.measure=mn;afterMeasure();if(sg)state.subgroup=sg;render();}
+
+function topicHTML(){const m=M[MI[state.measure]];
+ const ms=measuresFor(state.topic);const byStage={};ms.forEach(x=>{(byStage[x.stage]=byStage[x.stage]||[]).push(x)});
+ let nav='';STAGE.forEach(st=>{const grp=byStage[st];if(!grp)return;nav+=`<div class="navgrp">${esc(st)}</div>`;
+  const plats=grp.filter(x=>isPlatform(x.n));
+  grp.filter(x=>!isPlatform(x.n)).forEach(x=>nav+=`<div class="navitem ${x.n===state.measure?'on':''}" data-m="${esc(x.n)}">${esc(x.n)}</div>`);
+  if(plats.length){const anc=(plats.find(p=>p.n.endsWith('social'))||plats[0]).n;nav+=`<div class="navitem ${isPlatform(state.measure)?'on':''}" data-m="${esc(anc)}">Specific platform</div>`;}});
+ // controls
+ const sgs=subgroupsFor(state.topic,state.measure).map(g=>g);
+ const sgSel=sgs.length>1?`<span><label>Break down by</label><select id="sg">`+
+   ['ALL',...sgs.filter(g=>g!=='ALL')].filter(g=>sgs.includes(g)).map(g=>`<option ${g===state.subgroup?'selected':''} value="${esc(g)}">${g==='ALL'?'Total':esc(g)}</option>`).join('')+`</select></span>`:'';
+ const resps=responsesFor(state.topic,state.measure).filter(r=>r!=='');
+ const respSel=m.isCat?`<span><label>Category</label><select id="resp">`+resps.map(r=>`<option ${r===state.response?'selected':''} value="${esc(r)}">${esc(r)}</option>`).join('')+`</select></span>`:'';
+ const platSel=isPlatform(state.measure)?`<span><label>Channel</label><select id="chan">`+platformMeasures(state.topic).map(p=>`<option ${p.n===state.measure?'selected':''} value="${esc(p.n)}">${esc(p.n.slice(PLATPREFIX.length))}</option>`).join('')+`</select></span>`:'';
+ const basisT=`<span><label>Basis</label><span class="toggle" id="basis"><button data-b="1" class="${state.basis===1?'on':''}">18+ comparable</button><button data-b="0" class="${state.basis===0?'on':''}">As published</button></span></span>`;
+ // series + kpis
+ const s=seriesFor();const kp=kpiHTML(s);
+ let bd=breakdownItems();const cmp=compareItems();let sepCompare=cmp&&cmp.length;let bdHarm=false;
+ if(bd.items.length===0&&cmp&&cmp.length){bd={title:'Compare harms',items:cmp};bdHarm=true;sepCompare=false;}
+ const trendT=`${esc(state.measure)}${m.isCat?' — '+esc(state.response):''}`;
+ let html=`<div class="layout"><div class="nav">${nav}</div><div class="main">
+  <div class="crumb">${crumbHTML()}</div>
+  <div class="ctrls">${platSel}${respSel}${sgSel}${basisT}</div>
+  <div class="kpis">${kp}</div>
+  <div class="cards2">
+   <div class="panel"><h3>${trendT}</h3><div class="note">Trend across waves${state.subgroup!=='ALL'?' by '+esc(state.subgroup):''} &middot; shaded 95% CI (effective base)</div><div id="trendsvg">${lineSVG(s)}</div>${legendHTML(s)}</div>
+   <div class="panel"><h3>${esc(bd.title||'Breakdown')}</h3><div class="note">${bdHarm?'Latest wave, all harms':'Latest wave'+(bd.items.length>15?' (top 15)':'')}</div>${barSVG(bd.items,{harm:bdHarm})}</div>
+  </div>`;
+ if(sepCompare){html+=`<div class="panel" style="margin-bottom:12px"><h3>Compare harms</h3><div class="note">${esc(state.measure)}${m.isCat?' — '+esc(state.response):''}, latest wave</div>${barSVG(cmp,{harm:true})}</div>`;}
+ html+=`<div class="tablewrap"><div class="hd"><h3 style="font-size:13px">Data table</h3><div><button class="btn" id="pngBtn">Chart PNG</button> <button class="btn" id="svgBtn">Chart SVG</button> <button class="btn" id="csvBtn">CSV</button></div></div>${tableHTML(s)}</div>`;
+ return html+`</div></div>`;}
+
+function seriesFor(){const r=frows(state.topic,state.measure,state.response,state.subgroup);const byV={};
+ r.forEach(x=>{(byV[V[x[cV]]]=byV[V[x[cV]]]||[]).push({wave:x[cW],pct:x[cP],base:x[cBASE],small:x[cS],eff:x[cEFF]})});
+ Object.values(byV).forEach(a=>a.sort((p,q)=>p.wave-q.wave));
+ const waves=[...new Set(r.map(x=>x[cW]))].sort((a,b)=>a-b);
+ return {waves,series:Object.entries(byV).map(([label,points])=>({label,points}))};}
+
+function breakdownItems(){const m=M[MI[state.measure]];
+ const all=frows(state.topic,state.measure,state.response,'ALL').map(x=>x[cW]);
+ if(!all.length)return {title:'',items:[]};const latest=Math.max(...all);
+ if(m.isCat&&state.subgroup==='ALL'){const cats=responsesFor(state.topic,state.measure).filter(c=>c!=='');
+  return {title:`Categories — W${latest}`,items:cats.map(c=>{const x=oneRow(state.topic,state.measure,c,'ALL',latest);return x?{label:c,pct:x[cP],base:x[cBASE],small:x[cS]}:null;}).filter(Boolean)};}
+ if(state.subgroup!=='ALL'){const rw=frows(state.topic,state.measure,state.response,state.subgroup).filter(x=>x[cW]===latest);
+  return {title:`By ${state.subgroup} — W${latest}`,items:rw.map(x=>({label:V[x[cV]],pct:x[cP],base:x[cBASE],small:x[cS]}))};}
+ // single-value, Total: show the four-harm compare here instead handled separately; show value over subgroups n/a
+ return {title:`Latest wave`,items:[]};}
+
+function compareItems(){const m=M[MI[state.measure]];if(!m.cross)return null;const items=[];
+ HARMS.forEach(tp=>{const set=topicMeasures[TI[tp]];if(!set||!set.has(MI[state.measure]))return;
+  const ws=rows.filter(x=>x[cT]===TI[tp]&&x[cM]===MI[state.measure]&&x[cB]===state.basis).map(x=>x[cW]);if(!ws.length)return;
+  const x=oneRow(tp,state.measure,state.response,'ALL',Math.max(...ws));if(x)items.push({label:tp,pct:x[cP],base:x[cBASE],small:x[cS]});});
+ return items;}
+
+function crumbHTML(){const m=M[MI[state.measure]],b=state.basis;
+ const cond=['Severity & context','Where','Response','Scams detail','Misinformation detail'];
+ const vr=lastRow(state.topic,state.measure,state.response,'ALL',b);
+ const vb=vr?vr[cBASE].toLocaleString():'&ndash;',flag=vr&&vr[cS]?' <span class="warn">&#9888;</span>':'';
+ if(state.topic==='Attitudes')return `Base: all respondents <b>${vb}</b>`;
+ if(state.measure==='Most recent harm')return `Base: those who experienced any harm <b>${vb}</b>`;
+ if(!cond.includes(m.stage))return `Base: all respondents <b>${vb}</b>`;
+ const er=lastRow(state.topic,'Experienced','','ALL',b),sh=esc(state.topic.replace(' & fraud',''));
+ return `All respondents <b>${er?er[cBASE].toLocaleString():'&ndash;'}</b> <i>&rarr;</i> Experienced ${sh} <b>${er?er[cP]+'%':'&ndash;'}</b> <i>&rarr;</i> This view <b>${vb}</b>${flag}`;}
+function kpiHTML(s){const ser=s.series[0];if(!ser||!ser.points.length)return '<div class="kpi"><div class="l">No data</div></div>';
+ const p=ser.points,last=p[p.length-1],prev=p[p.length-2];
+ const peak=p.reduce((a,b)=>b.pct>a.pct?b:a),low=p.reduce((a,b)=>b.pct<a.pct?b:a);
+ let chg='';if(prev){const d=(last.pct-prev.pct).toFixed(1);const sg=sigDiff(last.pct,last.eff,prev.pct,prev.eff);
+  const pol=(M[MI[state.measure]].pol||'neu');const cls=pol==='bad'?(d>=0?'neg':'pos'):'muted';
+  chg=`<div class="s ${cls}">${d>=0?'+':''}${d} pts vs W${prev.wave} <span style="color:${sg?'#0f7b3f':'#9aa4b1'}">(${sg?'sig.':'n.s.'})</span></div>`;}
+ const lbl=state.subgroup==='ALL'?'':' ('+esc(ser.label)+')';
+ return `<div class="kpi"><div class="l">Latest W${last.wave}${lbl}</div><div class="v">${last.pct}%</div>${chg}</div>
+  <div class="kpi"><div class="l">Peak</div><div class="v">${peak.pct}%</div><div class="s">Wave ${peak.wave}</div></div>
+  <div class="kpi"><div class="l">Low</div><div class="v">${low.pct}%</div><div class="s">Wave ${low.wave}</div></div>
+  <div class="kpi"><div class="l">Latest base</div><div class="v">${last.base.toLocaleString()}</div><div class="s ${last.small?'flagtxt':''}">${last.small?'&#9888; small base':'unweighted'}</div></div>`;}
+
+function ciHalf(pct,base){if(!base||base<=0)return 0;const pp=pct/100;return Math.round(1.96*Math.sqrt(pp*(1-pp)/base)*1000)/10;}
+function sigDiff(p1,n1,p2,n2){if(!n1||!n2)return false;const a=p1/100,b=p2/100;const se=Math.sqrt(a*(1-a)/n1+b*(1-b)/n2);return se>0&&Math.abs(a-b)/se>1.96;}
+function niceMax(v){if(v<=0)return 10;for(const s of [10,20,25,30,40,50,60,75,100])if(v<=s)return s;return 100;}
+function lineSVG(s){const {waves,series}=s;if(!series.length||!waves.length)return '<p class="muted">No data.</p>';
+ const W=680,H=300,mL=40,mR=12,mT=12,mB=34,pw=W-mL-mR,ph=H-mT-mB;let mx=0;series.forEach(d=>d.points.forEach(p=>{if(p.pct>mx)mx=p.pct}));const ym=niceMax(mx);
+ const xO=i=>mL+(waves.length===1?pw/2:pw*i/(waves.length-1)),yO=v=>mT+ph*(1-v/ym);
+ let svg=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+ for(let t=0;t<=5;t++){const yv=ym*t/5,y=yO(yv);svg+=`<line x1="${mL}" y1="${y}" x2="${W-mR}" y2="${y}" stroke="#eef1f5"/><text x="${mL-6}" y="${y+4}" text-anchor="end" font-size="10.5" fill="#9aa4b1">${yv}%</text>`;}
+ waves.forEach((w,i)=>svg+=`<text x="${xO(i)}" y="${H-13}" text-anchor="middle" font-size="10.5" fill="#697586">W${w}</text>`);
+ const gi=waves.findIndex((w,i)=>i>0&&waves[i-1]<=2&&w>=4);if(gi>0){const gx=(xO(gi-1)+xO(gi))/2;svg+=`<line x1="${gx}" y1="${mT}" x2="${gx}" y2="${mT+ph}" stroke="#c4321a" stroke-width="1" stroke-dasharray="3 3" opacity="0.55"/><text x="${gx}" y="${mT+9}" text-anchor="middle" font-size="8.5" fill="#c4321a">no W3 / break</text>`;}
+ if(series.length===1){const d=series[0],up=[],lo=[];waves.forEach((w,i)=>{const f=d.points.find(p=>p.wave===w);if(f){const c=ciHalf(f.pct,f.eff);up.push([xO(i),yO(Math.min(f.pct+c,ym))]);lo.push([xO(i),yO(Math.max(f.pct-c,0))]);}});if(up.length>1){const cc=HARM_COLOR[state.topic]||COLORS[0];svg+=`<polygon points="${up.concat(lo.reverse()).map(p=>p.join(',')).join(' ')}" fill="${cc}" opacity="0.12"/>`;}}
+ series.forEach((d,ki)=>{const col=(series.length===1&&HARM_COLOR[state.topic])?HARM_COLOR[state.topic]:COLORS[ki%COLORS.length];let segs=[],cur=[];
+  waves.forEach((w,i)=>{const f=d.points.find(p=>p.wave===w);if(i>0&&waves[i-1]<=2&&w>=4&&cur.length){segs.push(cur);cur=[];}if(f)cur.push([xO(i),yO(f.pct)]);else{if(cur.length){segs.push(cur);cur=[]}}});if(cur.length)segs.push(cur);
+  segs.forEach(pp=>{if(pp.length>1)svg+=`<polyline fill="none" stroke="${col}" stroke-width="2.3" points="${pp.map(p=>p.join(',')).join(' ')}"/>`});
+  waves.forEach((w,i)=>{const f=d.points.find(p=>p.wave===w);if(f)svg+=`<circle cx="${xO(i)}" cy="${yO(f.pct)}" r="3.2" fill="${col}"><title>${esc(d.label)} W${w}: ${f.pct}% (base ${f.base})</title></circle>`});});
+ return svg+'</svg>';}
+function legendHTML(s){if(s.series.length<2)return '';return '<div class="legend">'+s.series.map((d,i)=>`<span><i style="background:${COLORS[i%COLORS.length]}"></i>${esc(d.label)}</span>`).join('')+'</div>';}
+function barSVG(items,opts){opts=opts||{};if(!items||!items.length)return '<p class="muted">No breakdown for this view.</p>';
+ let it=items.slice();if(it.length>15){it=it.slice().sort((a,b)=>b.pct-a.pct).slice(0,15);}
+ const W=680,rowH=30,mL=220,mR=44,mT=6,pw=W-mL-mR,H=mT+it.length*rowH+6;const ym=niceMax(Math.max(...it.map(i=>i.pct)));
+ let svg=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+ it.forEach((d,i)=>{const y=mT+i*rowH,bw=Math.max(pw*d.pct/ym,0),col=opts.harm?(HARM_COLOR[d.label]||'#6b7280'):(d.small?'#d0457d':COLORS[i%COLORS.length]);
+  const lab=d.label.length>36?d.label.slice(0,35)+'…':d.label;
+  svg+=`<text x="${mL-8}" y="${y+rowH/2+4}" text-anchor="end" font-size="12.5" fill="#3a4552">${esc(lab)}</text>`;
+  svg+=`<rect x="${mL}" y="${y+5}" width="${bw}" height="${rowH-12}" rx="3" fill="${col}"><title>${esc(d.label)}: ${d.pct}% (base ${d.base}${d.small?' ⚠':''})</title></rect>`;
+  svg+=`<text x="${mL+bw+6}" y="${y+rowH/2+4}" font-size="12.5" fill="#3a4552">${d.pct}%${d.small?' ⚠':''}</text>`;});
+ return svg+'</svg>';}
+function sparkSVG(p,c){if(!p.length)return '';c=c||'#2a6df4';const W=240,H=40,mx=niceMax(Math.max(...p.map(d=>d.pct)));
+ const xs=i=>p.length===1?W/2:6+(W-12)*i/(p.length-1),ys=v=>H-4-(H-8)*v/mx;
+ let pts=p.map((d,i)=>[xs(i),ys(d.pct)]);
+ return `<svg viewBox="0 0 ${W} ${H}" role="img"><polyline fill="none" stroke="${c}" stroke-width="2" points="${pts.map(a=>a.join(',')).join(' ')}"/>${pts.map(a=>`<circle cx="${a[0]}" cy="${a[1]}" r="2.2" fill="${c}"/>`).join('')}</svg>`;}
+
+function tableHTML(s){let rws=[];s.series.forEach(d=>d.points.forEach(p=>rws.push({g:d.label,...p})));
+ rws.sort((a,b)=>a.wave-b.wave||a.g.localeCompare(b.g));
+ let h='<table><thead><tr><th>Wave</th><th>Group</th><th>Weighted %</th><th>95% CI</th><th>Base</th><th>Flag</th></tr></thead><tbody>';
+ if(!rws.length)h+='<tr><td colspan="6" class="muted">No data.</td></tr>';
+ rws.forEach(r=>h+=`<tr><td>W${r.wave}</td><td>${esc(r.g)}</td><td><b>${r.pct}%</b></td><td class="muted">&plusmn;${ciHalf(r.pct,r.eff)}</td><td>${r.base.toLocaleString()}</td><td>${r.small?'<span class="flagtxt">&#9888; small</span>':'<span class="muted">&mdash;</span>'}</td></tr>`);
+ return h+'</tbody></table>';}
+
+function wireTopic(){document.querySelectorAll('.navitem').forEach(el=>el.onclick=()=>selectMeasure(el.dataset.m));
+ document.querySelectorAll('#basis button').forEach(b=>b.onclick=()=>{state.basis=+b.dataset.b;render();});
+ const sg=$('sg');if(sg)sg.onchange=()=>{state.subgroup=sg.value;render();};
+ const rs=$('resp');if(rs)rs.onchange=()=>{state.response=rs.value;render();};
+ const ch=$('chan');if(ch)ch.onchange=()=>selectMeasure(ch.value);
+ const cb=$('csvBtn');if(cb)cb.onclick=downloadCSV;const pb=$('pngBtn');if(pb)pb.onclick=downloadPNG;const sb=$('svgBtn');if(sb)sb.onclick=downloadSVG;}
+function caveats(){const m=M[MI[state.measure]];const s=seriesFor();
+ const title=`${state.topic} — ${state.measure}${m.isCat&&state.response?' — '+state.response:''}${state.subgroup!=='ALL'?' · by '+state.subgroup:''}`;
+ const basis=state.basis===1?'18+ comparable basis (13+ waves recomputed to 18+; our calculation)':'as-published basis (13+ for W1–7, 18+ for W8–9; not like-for-like)';
+ const hasEarly=s.waves.some(w=>w<=2);
+ const vr=lastRow(state.topic,state.measure,state.response,'ALL');
+ const anySmall=s.series.some(d=>d.points.some(p=>p.small));
+ const lines=[`Weighted %; ${basis}. No Wave 3 (withdrawn by Ofcom).`+(hasEarly?' W1–2 used an earlier survey format — treat the W2→W4 step as a method change, not a trend.':''),
+  `Source: Ofcom Online Experiences Tracker — independent analysis, not an Ofcom output. Latest-wave unweighted base (Total): ${vr?vr[cBASE].toLocaleString():'–'}.`+(anySmall?' ⚠ Includes small bases (<50) — indicative only.':'')];
+ return {title,lines};}
+function exportSVGString(){const el=$('trendsvg');if(!el)return null;let svg=el.innerHTML;if(!svg.includes('<svg'))return null;
+ const t=caveats();const H=300+16+t.lines.length*13+8;
+ svg=svg.replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" ').replace('viewBox="0 0 680 300"',`viewBox="0 0 680 ${H}"`);
+ let y=316,txt=`<text x="10" y="${y}" font-size="10.5" font-weight="600" fill="#1c2533" font-family="sans-serif">${esc(t.title)}</text>`;
+ t.lines.forEach(l=>{y+=13;txt+=`<text x="10" y="${y}" font-size="9" fill="#697586" font-family="sans-serif">${esc(l)}</text>`;});
+ return {svg:svg.replace('</svg>',txt+'</svg>'),h:H};}
+function downloadSVG(){const r=exportSVGString();if(!r)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([r.svg],{type:'image/svg+xml'}));a.download='oet_trend.svg';a.click();}
+function downloadPNG(){const r=exportSVGString();if(!r)return;const W=1360,H=Math.round(r.h*2);const svg=r.svg.replace('<svg ',`<svg width="${W}" height="${H}" `);
+ const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);x.drawImage(img,0,0,W,H);try{const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='oet_trend.png';a.click();}catch(e){alert('PNG export blocked here; use Chart SVG.');}};img.onerror=()=>alert('Could not render PNG; use Chart SVG.');img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);}
+function downloadCSV(){const s=seriesFor();const t=caveats();
+ let csv=`# ${t.title}\n`;t.lines.forEach(l=>csv+=`# ${l}\n`);
+ csv+='topic,measure,response,basis,wave,group,weighted_pct,ci95_halfwidth,unweighted_base,small_base\n';
+ s.series.forEach(d=>d.points.forEach(p=>{csv+=[`"${state.topic}"`,`"${state.measure}"`,`"${state.response}"`,B[state.basis],p.wave,`"${d.label}"`,p.pct,ciHalf(p.pct,p.eff),p.base,p.small].join(',')+'\n';}));
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='oet_view.csv';a.click();}
+
+function updateHash(){const p=new URLSearchParams();p.set('t',state.topic);
+ if(state.topic!=='Overview'){p.set('m',state.measure);if(state.response)p.set('r',state.response);p.set('g',state.subgroup);p.set('b',state.basis);}
+ try{history.replaceState(null,'','#'+p.toString());}catch(e){location.hash=p.toString();}}
+function initFromHash(){const hs=location.hash.replace(/^#/,'');if(!hs)return;const p=new URLSearchParams(hs);const t=p.get('t');
+ if(!t)return;if(t==='Overview'){state.topic='Overview';return;}if(!T.includes(t))return;state.topic=t;const m=p.get('m');
+ if(m&&MI[m]!=null&&(topicMeasures[TI[t]]||new Set()).has(MI[m])){state.measure=m;afterMeasure();
+  const r=p.get('r');if(r&&responsesFor(t,m).includes(r))state.response=r;
+  const g=p.get('g');if(g&&subgroupsFor(t,m).includes(g))state.subgroup=g;
+  const b=p.get('b');if(b==='0'||b==='1')state.basis=+b;
+ }else{state.measure=measuresFor(t)[0].n;afterMeasure();}}
+function copyLink(){updateHash();const txt=location.href;const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();
+ try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);const b=$('linkBtn');const o=b.innerHTML;b.innerHTML='Copied!';setTimeout(()=>b.innerHTML=o,1400);}
+$('aboutBtn').onclick=()=>$('about').classList.toggle('show');
+$('aboutClose').onclick=()=>$('about').classList.remove('show');
+$('linkBtn').onclick=copyLink;
+initFromHash();render();
+</script></body></html>
