@@ -1,9 +1,9 @@
-"""OET Phase 1+ — build in-scope catalogue + weighted estimates (waves 4-9),
+"""OET Phase 1+ — build in-scope catalogue + weighted estimates (waves 4+; files set in oet_sources.py),
 incl. the Q32 scams-detail module. Run: python oet_build_estimates.py"""
 import pandas as pd, numpy as np, pyreadstat
+from oet_sources import read_merged, MONTH2WAVE
 from oet_checks import assert_waves_mapped, assert_unique
 
-SAV = "raw/data-sav-merged-waves-4-9.sav"
 ITEMS = {"11":"Misinformation / fake news","19":"Catfishing / impersonation",
          "24":"Deepfakes (fake/deceptive images & video)","26":"Scams, fraud, or phishing"}
 AGE_DUMMIES = {"D2_2":"18-24","D2_3":"25-34","D2_4":"35-44","D2_5":"45-54",
@@ -13,7 +13,6 @@ REGION = {1:"Scotland",2:"North East",3:"North West",4:"Yorkshire & Humber",5:"W
           6:"East Midlands",7:"Wales",8:"East of England",9:"London",10:"South East",
           11:"South West",12:"Northern Ireland"}
 SEG = {1:"AB",2:"AB",3:"C1C2",4:"C1C2",5:"DE",6:"DE"}
-MONTH2WAVE = {"2023-07":4,"2024-01":5,"2024-05":6,"2024-06":6,"2025-01":7,"2025-06":8,"2025-07":8,"2026-01":9}
 SMALL_BASE = 50
 FRAUD_TYPES = {"1":"Impersonation fraud","2":"Counterfeit goods scam","3":"Investment/pension scam",
    "4":"Computer software / ransomware","5":"Fake employment scam","6":"Romance/dating scam",
@@ -27,7 +26,7 @@ SUBGROUPS = [("ALL",None),("Gender","Gender"),("Age","Age"),("Region","Region"),
 def load():
     q=[f"Q7_{s}" for s in ITEMS]+[f"Q8_{s}" for s in ITEMS]+["Q32b1"]+[f"Q32b2_{i}" for i in range(1,13)]
     cols=["starttime","weight","D1_C8","D3","profile_socialgrade_cie"]+list(AGE_DUMMIES)+q
-    df,_=pyreadstat.read_sav(SAV,usecols=cols)
+    df,_=read_merged(cols)
     st=pd.to_datetime(df["starttime"],errors="coerce")
     df["wave"]=st.dt.to_period("M").astype(str).map(MONTH2WAVE)
     assert_waves_mapped(df,"oet_build_estimates")
@@ -86,6 +85,8 @@ def build_q32(df):
 
 def build_catalogue(df):
     rows=[]
+    def present(var):
+        return ",".join(str(int(w)) for w in sorted(df.dropna(subset=[var])["wave"].dropna().unique()))
     specs=[("Q7","Concern (Q7)","Scale 1-5 top-box; base=all"),("Q8","Experienced (Q8)","Seen/experienced last 4 wks; base=all")]
     for suf,ilabel in ITEMS.items():
         for pref,qlabel,desc in specs:
@@ -94,10 +95,10 @@ def build_catalogue(df):
             waves=sorted(int(w) for w in df.dropna(subset=[var])["wave"].dropna().unique())
             rows.append(dict(item=ilabel,question=qlabel,variable=var,metric=desc,waves_present=",".join(map(str,waves))))
     rows.append(dict(item="Lost money/assets to a scam",question="Scams detail (Q32)",variable="Q32b1",
-        metric="% Yes; base = those who experienced scams",waves_present="4,5,6,7,8,9"))
+        metric="% Yes; base = those who experienced scams",waves_present=present("Q32b1")))
     for suf,lab in FRAUD_TYPES.items():
         rows.append(dict(item=lab,question="Scams detail (Q32)",variable=f"Q32b2_{suf}",
-            metric="% of money-losers; SMALL base",waves_present="4,5,6,7,8,9"))
+            metric="% of money-losers; SMALL base",waves_present=present(f"Q32b2_{suf}")))
     return pd.DataFrame(rows)
 
 if __name__=="__main__":

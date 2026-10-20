@@ -1,12 +1,11 @@
 """Add Tier 1-3 follow-up questions (per in-scope harm) to estimates_long.csv.
 Harm becomes the 'metric' selector; response categories become 'item'.
-Waves 4-9 only (these follow-ups don't exist in the W1-2 files)."""
+Waves 4+ only (these follow-ups don't exist in the W1-2 files)."""
 import pandas as pd, numpy as np, pyreadstat, re
+from oet_sources import read_merged, MONTH2WAVE
 from oet_checks import short, assert_waves_mapped, assert_unique
 
-SAV="raw/data-sav-merged-waves-4-9.sav"
 HARMS={"26":"Scams","24":"Deepfakes","11":"Misinformation","19":"Impersonation"}
-MONTH2WAVE={"2023-07":4,"2024-01":5,"2024-05":6,"2024-06":6,"2025-01":7,"2025-06":8,"2025-07":8,"2026-01":9}
 AGE_DUMMIES=["D2_2","D2_3","D2_4","D2_5","D2_6","D2_7","D2_8"]
 GENDER={1:"Male",2:"Female",3:"Non-binary",4:"Other term",5:"Prefer not to say"}
 AGE={ "D2_2":"18-24","D2_3":"25-34","D2_4":"35-44","D2_5":"45-54","D2_6":"55-64","D2_7":"65-74","D2_8":"75+"}
@@ -29,7 +28,7 @@ def load():
         for b in MULTI:
             cols+= [f"{b}_{h}_{i}" for i in MULTI[b][1]]
     cols=[c for c in dict.fromkeys(cols)]
-    df,meta=pyreadstat.read_sav(SAV,usecols=cols)
+    df,meta=read_merged(cols)
     st=pd.to_datetime(df["starttime"],errors="coerce")
     df["wave"]=st.dt.to_period("M").astype(str).map(MONTH2WAVE)
     assert_waves_mapped(df,"oet_followups")

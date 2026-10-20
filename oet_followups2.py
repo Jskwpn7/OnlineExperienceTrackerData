@@ -2,10 +2,9 @@
 platform per channel (Q22-Q29), and whole-sample attitudes (Q45/Q46/Q34).
 Harm = 'metric' for per-harm items; attitudes use metric='Total' with subgroups."""
 import pandas as pd, numpy as np, pyreadstat, re
+from oet_sources import read_merged, MONTH2WAVE
 from oet_checks import short, assert_waves_mapped, assert_unique
-SAV="raw/data-sav-merged-waves-4-9.sav"
 HARMS={"26":"Scams","24":"Deepfakes","11":"Misinformation","19":"Impersonation"}
-MONTH2WAVE={"2023-07":4,"2024-01":5,"2024-05":6,"2024-06":6,"2025-01":7,"2025-06":8,"2025-07":8,"2026-01":9}
 AGE_DUMMIES=["D2_2","D2_3","D2_4","D2_5","D2_6","D2_7","D2_8"]
 GENDER={1:"Male",2:"Female",3:"Non-binary",4:"Other term",5:"Prefer not to say"}
 AGE={"D2_2":"18-24","D2_3":"25-34","D2_4":"35-44","D2_5":"45-54","D2_6":"55-64","D2_7":"65-74","D2_8":"75+"}
@@ -25,7 +24,7 @@ def load():
         for b in SINGLE_PERHARM: cols.append(f"{b}_{h}")
         cols+=[f"Q14c_{h}_{i}" for i in Q14c]
     cols=[c for c in dict.fromkeys(cols)]
-    df,meta=pyreadstat.read_sav(SAV,usecols=cols)
+    df,meta=read_merged(cols)
     st=pd.to_datetime(df["starttime"],errors="coerce"); df["wave"]=st.dt.to_period("M").astype(str).map(MONTH2WAVE)
     assert_waves_mapped(df,"oet_followups2")
     df["Gender"]=df["D1_C8"].map(GENDER); df["Region"]=df["D3"].map(REGION); df["SEG"]=df["profile_socialgrade_cie"].map(SEG)

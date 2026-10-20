@@ -61,11 +61,11 @@ td{padding:8px 10px;border-bottom:1px solid #f0f2f5}
 @media(max-width:880px){.layout{grid-template-columns:1fr}.cards2{grid-template-columns:1fr}}
 </style></head><body><div class="wrap">
 <header class="top"><h1>OET Scams &amp; Online-Harms Explorer</h1>
-<p>Ofcom Online Experiences Tracker, waves 1&ndash;9 (2021&ndash;2026) &middot; weighted estimates &middot; pick a topic, then a measure</p>
+<p>Ofcom Online Experiences Tracker, waves 1&ndash;10 (2021&ndash;2026) &middot; weighted estimates &middot; pick a topic, then a measure</p>
 <button class="aboutbtn" id="aboutBtn">&#9432; About &amp; how to read</button> <button class="aboutbtn" id="linkBtn">&#128279; Copy link</button></header>
 <div class="about" id="about"><button class="close" id="aboutClose">Close</button>
 <h2>How to read this tool &mdash; and its caveats</h2>
-<p>Independent analysis of Ofcom&rsquo;s Online Experiences Tracker open data &mdash; <b>not an official Ofcom output</b>. It reproduces Ofcom&rsquo;s published Wave&nbsp;9 figures.</p>
+<p>Independent analysis of Ofcom&rsquo;s Online Experiences Tracker open data &mdash; <b>not an official Ofcom output</b>. It reproduces Ofcom&rsquo;s published Wave&nbsp;9 and Wave&nbsp;10 figures.</p>
 <h4>What the data is</h4><ul>
 <li>YouGov online survey for Ofcom, twice a year, ~7,000+ people per wave.</li>
 <li>Represents <b>UK internet users</b> (weighted) &mdash; not the whole population. Everything is <b>self-reported</b>.</li>
@@ -75,7 +75,7 @@ td{padding:8px 10px;border-bottom:1px solid #f0f2f5}
 <li>Each % is a share of <b>that view&rsquo;s base</b> &mdash; watch the base breadcrumb.</li>
 <li>Concern (attitude) and Experienced (encounter) are different things.</li><li>The trend shows a 95% confidence band, and each latest wave-on-wave change is flagged <b>sig.</b> or <b>n.s.</b> CIs use the <b>Kish effective base</b> (accounts for the weighting design effect); they don&rsquo;t add clustering/finite-population corrections, so treat them as close but not exact.</li><li><b>Copy link</b> (top right) copies a link to the exact view you&rsquo;re on.</li></ul>
 <h4>Waves &amp; comparability</h4><ul>
-<li>No Wave 3 (Ofcom withdrew it). 13+ (W1&ndash;7) vs 18+ (W8&ndash;9) &mdash; use the Basis toggle (&ldquo;18+ comparable&rdquo; is our recompute).</li></ul>
+<li>No Wave 3 (Ofcom withdrew it). 13+ (W1&ndash;7) vs 18+ (W8&ndash;10) &mdash; use the Basis toggle (&ldquo;18+ comparable&rdquo; is our recompute).</li></ul>
 <div class="warnrow"><b>Discontinuity:</b> waves 1&ndash;2 (2021&ndash;22) used an earlier format and sit far below waves 4+. Treat the 2&rarr;4 step as a method change, not a trend.</div>
 <h4>Base sizes</h4><ul>
 <li>Bases &lt;50 flagged <span style="color:#b54708">&#9888;</span>. Most follow-ups are asked about one sampled harm per person &mdash; Total-level only, smaller than headline numbers. Platform-specific (Q22&ndash;29) and genAI views are very thin, kept to track over time. Full detail in README.md.</li></ul></div>
@@ -267,7 +267,7 @@ function wireTopic(){document.querySelectorAll('.navitem').forEach(el=>el.onclic
  const cb=$('csvBtn');if(cb)cb.onclick=downloadCSV;const pb=$('pngBtn');if(pb)pb.onclick=downloadPNG;const sb=$('svgBtn');if(sb)sb.onclick=downloadSVG;}
 function caveats(){const m=M[MI[state.measure]];const s=seriesFor();
  const title=`${state.topic} — ${state.measure}${m.isCat&&state.response?' — '+state.response:''}${state.subgroup!=='ALL'?' · by '+state.subgroup:''}`;
- const basis=state.basis===1?'18+ comparable basis (13+ waves recomputed to 18+; our calculation)':'as-published basis (13+ for W1–7, 18+ for W8–9; not like-for-like)';
+ const basis=state.basis===1?'18+ comparable basis (13+ waves recomputed to 18+; our calculation)':'as-published basis (13+ for W1–7, 18+ for W8–10; not like-for-like)';
  const hasEarly=s.waves.some(w=>w<=2);
  const vr=lastRow(state.topic,state.measure,state.response,'ALL');
  const anySmall=s.series.some(d=>d.points.some(p=>p.small));
